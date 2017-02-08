@@ -5,6 +5,8 @@ import android.os.Environment;
 import com.bltech.mobile.utils.annotation.FilePathMode;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -44,15 +46,34 @@ public class EcgFileUtils {
         return Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 
-    public void readyWriteData() {
+    private FileOutputStream mFileOutputStream;
 
+    public void readyWriteData(String filePath) {
+        try {
+            mFileOutputStream = null;
+            mFileOutputStream = new FileOutputStream(filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void writeDataToFile(byte[] data) {
-
+    public void writeDataAsFile(byte[] data) {
+        if (mFileOutputStream != null) {
+            try {
+                mFileOutputStream.write(data, 0, data.length);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void finishWriteData() {
-
+        if (mFileOutputStream != null) {
+            try {
+                mFileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
