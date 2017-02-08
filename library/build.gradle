@@ -24,13 +24,14 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:25.1.0'
 }
 
 publish {
-    userOrg = 'zhishangkeji'
-    groupId = 'com.zhishangkeji'
+    userOrg = 'qindachang'
+    groupId = 'com.qindachang'
     artifactId = 'ecg-library'
     publishVersion = '1.0.0'
     desc = 'Android ECG Library'
-    website = 'https://github.com/qindachang/BluetoothLELibrary'
+    website = 'https://github.com/qindachang/ecgLibrary'
 }
