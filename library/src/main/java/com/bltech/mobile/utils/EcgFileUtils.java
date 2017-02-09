@@ -71,6 +71,7 @@ public class EcgFileUtils {
         if (mFileOutputStream != null) {
             try {
                 mFileOutputStream.close();
+                mFileOutputStream = null;
             } catch (IOException e) {
                 e.printStackTrace();
             }

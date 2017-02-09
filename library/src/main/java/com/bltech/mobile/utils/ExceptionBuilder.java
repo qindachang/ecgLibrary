@@ -20,11 +20,12 @@ class ExceptionBuilder {
     static class Builder {
         private int type;
 
-        public Builder setType(@ExceptionMode int type) {
+        Builder setType(@ExceptionMode int type) {
             this.type = type;
             return this;
         }
-        public ExceptionBuilder build() {
+
+        ExceptionBuilder build() {
             return new ExceptionBuilder(this);
         }
     }

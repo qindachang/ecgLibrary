@@ -1,7 +1,5 @@
 package com.bltech.mobile.utils;
 
-import android.util.Log;
-
 import com.bltech.mobile.utils.annotation.ExceptionMode;
 
 import java.util.LinkedHashSet;
