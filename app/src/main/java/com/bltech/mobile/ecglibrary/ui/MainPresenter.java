@@ -46,9 +46,10 @@ public class MainPresenter implements MainContract.Presenter {
     private CompositeSubscription mSubscriptions;
     private EcgManager mEcgManager;
     private BluetoothLe mBluetoothLe;
-    private EcgFileUtils mEcgFileUtils;
+    private EcgFileUtils mFileUtils;
 
     private DecodeDataCallback mDecodeDataCallback = new DecodeDataCallback() {
+
         @Override
         public void onDecodeData(short[] data, int heartRate) {
             //解密、类型转换、滤波 后的数据，这个数据可以用来绘制波形
@@ -64,13 +65,13 @@ public class MainPresenter implements MainContract.Presenter {
 
         mBluetoothLe = BluetoothLe.getDefault();
         mEcgManager = EcgManager.getInstance();
-        mEcgFileUtils = new EcgFileUtils();
+        mFileUtils = new EcgFileUtils();
         mSubscriptions = new CompositeSubscription();
 
         mEcgManager.setDecodeDataCallback(mDecodeDataCallback);
 
-        final File file = mEcgFileUtils.initFilePath(FilePathMode.SD, "Android/", "haha.ecg");
-        mEcgFileUtils.readyWriteData(file.getPath());
+        final File file = mFileUtils.initFilePath(FilePathMode.SD, "Android/", "haha.ecg");
+        mFileUtils.readyWriteData(file.getPath());
 
         mBluetoothLe.setOnConnectListener(TAG, new OnLeConnectListener() {
             @Override
@@ -103,7 +104,7 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void onSuccess(BluetoothGattCharacteristic characteristic) {
                 mEcgManager.decodeData(characteristic.getValue());//解密、类型转换、滤波数据
-                mEcgFileUtils.writeDataAsFile(characteristic.getValue());//将接收到的数据写入到文件中
+                mFileUtils.writeDataAsFile(characteristic.getValue());//将接收到的数据写入到文件中
             }
 
             @Override
@@ -196,7 +197,7 @@ public class MainPresenter implements MainContract.Presenter {
                     @Override
                     public void onCompleted() {
                         //倒计时完毕，也就是检测完毕
-                        mEcgFileUtils.finishWriteData();
+                        mFileUtils.finishWriteData();
                     }
 
                     @Override

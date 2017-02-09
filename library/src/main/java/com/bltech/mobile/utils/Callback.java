@@ -5,5 +5,5 @@ package com.bltech.mobile.utils;
  */
 
 interface Callback {
-
+    String NAME = "Callback";
 }
