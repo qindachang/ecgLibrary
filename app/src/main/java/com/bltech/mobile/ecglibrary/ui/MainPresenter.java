@@ -153,7 +153,7 @@ public class MainPresenter implements MainContract.Presenter {
         }
         mView.onBluetoothScanning(true);
         mBluetoothLe.setScanPeriod(15000)
-                .setScanWithServiceUUID(UUIDAttributes.SERVICE_ECG)
+                .setScanWithServiceUUID(UUIDAttributes.ecg.SERVICE_ECG)
                 .startScan(mView.getActivity(), new OnLeScanListener() {
                     @Override
                     public void onScanResult(BluetoothDevice bluetoothDevice, int rssi, ScanRecord scanRecord) {

@@ -7,15 +7,22 @@ import java.util.UUID;
  */
 
 public interface UUIDAttributes {
-    UUID SERVICE_ECG = UUID.fromString("");
-    UUID NOTIFICATION_HEART_RATE = UUID.fromString("");
-    UUID NOTIFICATION_ECG_SIGNAL = UUID.fromString("");
+    interface ecg {
+        UUID SERVICE_ECG = UUID.fromString("");
+        UUID NOTIFICATION_HEART_RATE = UUID.fromString("");
+        UUID NOTIFICATION_ECG_SIGNAL = UUID.fromString("");
+    }
 
-    UUID SERVICE_COMMAND = UUID.fromString("");
-    UUID WRITE = UUID.fromString("");
-    UUID READ = UUID.fromString("");
+    interface command {
+        UUID SERVICE_COMMAND = UUID.fromString("");
+        UUID WRITE = UUID.fromString("");
+        UUID READ = UUID.fromString("");
+    }
 
-    UUID SERVICE_STEP = UUID.fromString("");
-    UUID NOTIFICATION_STEP = UUID.fromString("");
-    UUID NOTIFICATION_STEP_STATUS = UUID.fromString("");
+    interface step {
+        UUID SERVICE_STEP = UUID.fromString("");
+        UUID NOTIFICATION_STEP = UUID.fromString("");
+        UUID NOTIFICATION_STEP_STATUS = UUID.fromString("");
+    }
+
 }
