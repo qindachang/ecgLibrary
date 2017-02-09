@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bltech.mobile.ecglibrary.R;
 import com.github.mikephil.charting.charts.LineChart;
+
+import java.util.Arrays;
 
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private LineChart mLineChart;
     private Button btnCheckup;
+    private TextView tvEcg, tvHeartRate;
 
 
     @Override
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         setContentView(R.layout.activity_main);
         mLineChart = (LineChart) findViewById(R.id.lineChart_ecg);
         btnCheckup = (Button) findViewById(R.id.btn_start_checkup);
+        tvEcg = (TextView) findViewById(R.id.tv_ecg_data);
+        tvHeartRate = (TextView) findViewById(R.id.tv_heart_rate);
         new MainPresenter(this, this);
 
         btnCheckup.setOnClickListener(new View.OnClickListener() {
@@ -75,12 +81,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onEcgChartDataChange(short[] data) {
-
+        tvEcg.setText("心电数据：" + Arrays.toString(data));
     }
 
     @Override
     public void onHeartRateChange(int heartRate) {
+        tvHeartRate.setText("心率：" + String.valueOf(heartRate));
+    }
 
+    @Override
+    public void onCheckupCountDown(String time) {
+        btnCheckup.setText(time);
+    }
+
+    @Override
+    public void onCheckupComplete() {
+        btnCheckup.setText("开始检测");
     }
 
     @Override

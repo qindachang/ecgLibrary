@@ -4,9 +4,12 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
+import com.bltech.mobile.ecglibrary.helper.CheckupStateHelper;
 import com.bltech.mobile.ecglibrary.model.UUIDAttributes;
+import com.bltech.mobile.ecglibrary.utils.TimeUtils;
 import com.bltech.mobile.utils.DecodeDataCallback;
 import com.bltech.mobile.utils.EcgFileUtils;
 import com.bltech.mobile.utils.EcgManager;
@@ -40,6 +43,8 @@ import rx.subscriptions.CompositeSubscription;
 public class MainPresenter implements MainContract.Presenter {
     private static final String TAG = MainPresenter.class.getSimpleName();
 
+    private String filePath;//心电文件路径
+
     private Context mContext;
     private MainContract.View mView;
 
@@ -47,6 +52,7 @@ public class MainPresenter implements MainContract.Presenter {
     private EcgManager mEcgManager;
     private BluetoothLe mBluetoothLe;
     private EcgFileUtils mFileUtils;
+    private CheckupStateHelper mCheckupStateHelper;
 
     private DecodeDataCallback mDecodeDataCallback = new DecodeDataCallback() {
 
@@ -67,11 +73,13 @@ public class MainPresenter implements MainContract.Presenter {
         mEcgManager = EcgManager.getInstance();
         mFileUtils = new EcgFileUtils();
         mSubscriptions = new CompositeSubscription();
+        mCheckupStateHelper = new CheckupStateHelper();
 
         mEcgManager.setDecodeDataCallback(mDecodeDataCallback);
 
-        final File file = mFileUtils.initFilePath(FilePathMode.SD, "Android/", "haha.ecg");
+        final File file = mFileUtils.initFilePath(FilePathMode.SD, "Android/data", "haha.ecg");
         mFileUtils.readyWriteData(file.getPath());
+        filePath = file.getPath();
 
         mBluetoothLe.setOnConnectListener(TAG, new OnLeConnectListener() {
             @Override
@@ -128,6 +136,7 @@ public class MainPresenter implements MainContract.Presenter {
         mBluetoothLe.destroy(TAG);
         mBluetoothLe.destroy();
         mSubscriptions.clear();
+        mBluetoothLe.close();
     }
 
     @Override
@@ -140,7 +149,15 @@ public class MainPresenter implements MainContract.Presenter {
             scanAndConnect();
             return;
         }
-
+        if (mCheckupStateHelper.getCheckuping()) {
+            Toast.makeText(mContext, "正在检测中", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mBluetoothLe.writeDataToCharacteristic(new byte[]{8}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);
+        mBluetoothLe.writeDataToCharacteristic(new byte[]{1,1}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);
+        mBluetoothLe.enableNotification(true, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_HEART_RATE);
+        mBluetoothLe.enableNotification(true, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_ECG_SIGNAL);
+        countDown(60);
     }
 
     /**
@@ -183,6 +200,7 @@ public class MainPresenter implements MainContract.Presenter {
      * 检测倒计时
      */
     private void countDown(final int seconds) {
+        mCheckupStateHelper.setStart();
         Subscription subscription = Observable.interval(1, 1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -196,8 +214,13 @@ public class MainPresenter implements MainContract.Presenter {
                 .subscribe(new Observer<Integer>() {
                     @Override
                     public void onCompleted() {
+                        mView.onCheckupComplete();
                         //倒计时完毕，也就是检测完毕
                         mFileUtils.finishWriteData();
+                        mCheckupStateHelper.setFinish();
+                        mBluetoothLe.enableNotification(false, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_HEART_RATE);
+                        mBluetoothLe.enableNotification(false, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_ECG_SIGNAL);
+                        go2CheckupResult();
                     }
 
                     @Override
@@ -207,11 +230,17 @@ public class MainPresenter implements MainContract.Presenter {
 
                     @Override
                     public void onNext(Integer integer) {
-
+                        mView.onCheckupCountDown(TimeUtils.seconds2Date(integer));
                     }
                 });
         mSubscriptions.add(subscription);
     }
 
+    private void go2CheckupResult() {
+        Intent intent = new Intent(mContext, CheckupResultActivity.class);
+        intent.putExtra("filePath", filePath);
+        mContext.startActivity(intent);
+
+    }
 
 }

@@ -22,8 +22,8 @@ public class CheckupResultPresenter implements CheckupResultContract.Presenter {
 
         @Override
         public void onSuccess(AnalyzeResult result) {
-            String[] comment = new String[2];
-            comment = mEcgManager.getAnalyzeComment(result);
+            String[] comment = mEcgManager.getAnalyzeComment(result);
+
         }
 
         @Override

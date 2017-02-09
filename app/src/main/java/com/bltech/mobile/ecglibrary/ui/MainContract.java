@@ -15,6 +15,8 @@ public interface MainContract {
         void onBluetoothConnectChange(boolean connected);
         void onEcgChartDataChange(short[] data);
         void onHeartRateChange(int heartRate);
+        void onCheckupCountDown(String time);
+        void onCheckupComplete();
         Activity getActivity();
     }
 
