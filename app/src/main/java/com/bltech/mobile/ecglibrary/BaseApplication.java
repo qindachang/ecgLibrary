@@ -16,6 +16,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         EcgSDK.initSDK(new EcgConfig.Builder().setFilterFrequency(50).build());
+
         BluetoothConfig config = new BluetoothConfig.Builder()
                 .enableQueueInterval(true)
                 .setQueueIntervalTime(BluetoothConfig.AUTO)

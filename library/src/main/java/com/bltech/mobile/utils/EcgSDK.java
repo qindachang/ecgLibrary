@@ -12,5 +12,4 @@ public class EcgSDK {
         EcgNative.EcgIni(filterFrequency);
     }
 
-
 }
