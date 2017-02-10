@@ -153,10 +153,10 @@ public class MainPresenter implements MainContract.Presenter {
             Toast.makeText(mContext, "正在检测中", Toast.LENGTH_SHORT).show();
             return;
         }
-        mBluetoothLe.writeDataToCharacteristic(new byte[]{8}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);
-        mBluetoothLe.writeDataToCharacteristic(new byte[]{1,1}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);
-        mBluetoothLe.enableNotification(true, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_HEART_RATE);
-        mBluetoothLe.enableNotification(true, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_ECG_SIGNAL);
+        mBluetoothLe.writeDataToCharacteristic(new byte[]{8}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);//打开总开关
+        mBluetoothLe.writeDataToCharacteristic(new byte[]{1, 1}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);//打开心率通知
+        mBluetoothLe.enableNotification(true, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_HEART_RATE);//使能心率通知
+        mBluetoothLe.enableNotification(true, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_ECG_SIGNAL);//使能心电通知
         countDown(60);
     }
 
@@ -236,11 +236,13 @@ public class MainPresenter implements MainContract.Presenter {
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 跳转到检测详情
+     */
     private void go2CheckupResult() {
         Intent intent = new Intent(mContext, CheckupResultActivity.class);
         intent.putExtra("filePath", filePath);
         mContext.startActivity(intent);
-
     }
 
 }
