@@ -8,19 +8,12 @@ import android.os.Parcelable;
  */
 
 public class AnalyzeResult implements Parcelable {
-    /**
-     * 交感-副交感神经平衡度
-     */
+
     private float degree;
-    /**
-     * 6位int数组。【精神压力，疲劳程度，身心负荷，身体素质，心脏功能年龄（1：青少年，2：青壮年，3：中年，4：年轻老人，
-     * 5：老年），心率】
-     */
+
     private int[] HRV_des;
 
-    /**
-     * 6种异常情况：【心率不齐，心动过速，心动过缓，停搏情况，漏搏情况，房性早搏】
-     */
+
     private int[] analyze;
 
     @Override

@@ -27,9 +27,9 @@ public class EcgManager {
     private Set<Callback> mCallbacks = new LinkedHashSet<>();
 
     /**
-     * 解密、转换、滤波蓝牙传来的心电数据
+     * decode & translate & lvbo bluetooth receive data.
      *
-     * @param data 原始心电数据
+     * @param data original ecg data from bluetooth
      */
     public void decodeData(byte[] data) {
         int count = data.length;
@@ -49,7 +49,9 @@ public class EcgManager {
     }
 
     public void setDecodeDataCallback(DecodeDataCallback decodeDataCallback) {
-        mCallbacks.add(decodeDataCallback);
+        if (!mCallbacks.contains(decodeDataCallback)) {
+            mCallbacks.add(decodeDataCallback);
+        }
     }
 
     public boolean removeCallback(Callback callback) {
@@ -57,13 +59,15 @@ public class EcgManager {
     }
 
     /**
-     * 分析心电文件获得检测结果
+     * Analyze ecg file in order to get analyze result.
      *
-     * @param filePath 心电文件路径
+     * @param filePath ecg file path
      * @param callback AnalyzeCallback
      */
     public void analyzeEcgFile(String filePath, AnalyzeCallback callback) {
-        mCallbacks.add(callback);
+        if (!mCallbacks.contains(callback)) {
+            mCallbacks.add(callback);
+        }
         AnalyzeResult analyzeResult = new AnalyzeResult();
         analyzeResult.setDegree(1.0f);
         analyzeResult.setHRV_des(new int[]{0, 0, 0, 0, 0, 0});
@@ -115,11 +119,12 @@ public class EcgManager {
     }
 
     /**
-     * 从检测结果中获取评价、建议
+     * get comment and suggest form AnalyzeResult object.
      *
-     * @return String[0]评价，String[1]建议
+     * @return String[0]comment，String[1]suggest
      */
     public String[] getAnalyzeComment(AnalyzeResult analyzeResult) {
+        //TODO I am thinking about how to write this function.
         return null;
     }
 }

@@ -21,7 +21,7 @@ public class AnalyzeException implements Serializable {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         if (type == ExceptionMode.ABNORMAL) {
-            builder.append("很抱歉，数据异常，不能分析。请您摆正好自己的姿态和设备位置，尽量保持平息，中途不要离开，再重试。");
+            builder.append("Data receive error!");
         } else if (type == ExceptionMode.NDK) {
             builder.append("The ecg analyze error!");
         }

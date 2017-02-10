@@ -37,11 +37,6 @@ public class EcgFileUtils {
         return file1;
     }
 
-    /**
-     * 判断SD卡是否存在
-     *
-     * @return true已存在，false不存在
-     */
     public boolean isSDExist() {
         return Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
