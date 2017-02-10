@@ -1,5 +1,7 @@
 package com.bltech.mobile.utils;
 
+import android.content.Context;
+
 import com.bltech.mobile.utils.annotation.ExceptionMode;
 
 import java.util.LinkedHashSet;
@@ -123,8 +125,11 @@ public class EcgManager {
      *
      * @return String[0]comment，String[1]suggest
      */
-    public String[] getAnalyzeComment(AnalyzeResult analyzeResult) {
-        //TODO I am thinking about how to write this function.
-        return null;
+    public final String[] getAnalyzeComment(Context context, AnalyzeResult analyzeResult) {
+        String[] result = new String[2];
+        Suggestion suggestion = new Suggestion(context, analyzeResult);
+        result[0] = suggestion.getComment();
+        result[1] = suggestion.getSuggest();
+        return result;
     }
 }

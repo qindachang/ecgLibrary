@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">utils</string>
+
+    <!-- 交感-副交感神经平衡度 -->
+    <string name="Sympathetic1">您的副交感神经系统处于过度主导地位</string> <!-- 若小于等于0.4 -->
+    <string name="Sympathetic2">您的副交感神经系统占主导地位</string> <!-- 小于等于0.8 且大于0.4 -->
+    <string name="Sympathetic3">您的交感神经系统和副交感神经系统处于平衡状态</string> <!-- 小于等于1.5 且范围大于等于0.8 -->
+    <string name="Sympathetic4">您的交感神经处于主导地位</string> <!-- 若小于等于3.9且大于1.5 -->
+    <string name="Sympathetic5">您的交感神经处于过度主导地位</string> <!-- 若大于3.9 -->
+
+    <!-- 心理压力 -->
+    <string name="mental_pressure1"> 心理压力低 </string> <!-- 若小于等于13 -->
+    <string name="mental_pressure2"> 心理压力适中 </string> <!-- 小于等于51,且大于13 -->
+    <string name="mental_pressure3"> 心理压力高</string> <!-- 若小于等于75,且大于51 -->
+    <string name="mental_pressure4"> 心理压力非常高</string> <!-- 若大于75 -->
+
+    <!-- 身体压力 -->
+    <string name="body_pressure1">身体压力低</string> <!-- 若小于等于25， -->
+    <string name="body_pressure2">身体压力适中 </string> <!-- 若小于等于51,且大于13 -->
+    <string name="body_pressure3">身体压力高 </string> <!-- 若小于等于75,且大于51 -->
+    <string name="body_pressure4">身体压力非常高</string> <!-- 大于75 -->
+
+    <!-- 抗压能力 -->
+    <string name="Compression1">抗压能力非常差</string> <!-- 若小于等于20 -->
+    <string name="Compression2">抗压能力差</string> <!-- 若小于等于40，且大于20 -->
+    <string name="Compression3">抗压能力正常</string> <!-- 若小于等于60，且大于40 -->
+    <string name="Compression4">抗压能力高</string> <!-- 若小于等于80，且大于60: -->
+    <string name="Compression5">抗压能力极佳</string> <!-- 若大于80 -->
+
+    <!-- 评价语 -->
+    <string name="Evaluation1">因您的您的副交感神经系统过于活跃，会感到四肢无力、精神衰弱、忧郁等症状，建议您平时多运动、参加户外活动，提高机体的兴奋性和抗压能力。</string>
+    <string name="Evaluation2">因您的您的副交感神经系统过于活跃，会感到四肢无力、精神衰弱、忧郁等症状，鉴于您的抗压状态良好，所以这种情况只是暂时的，这个世界有很多美好的事情等待您去发掘。</string>
+    <string name="Evaluation3">因您情绪上过度松弛，会感到慵懒、对事情提不起兴趣等症状，建议您平时多运动、参加户外活动，提高机体的兴奋性和抗压能力。</string>
+    <string name="Evaluation4">因您情绪上过度松弛，会感到慵懒、对事情提不起兴趣等症状，鉴于您的抗压状态良好，所以这种情况只是暂时的，乐观点，这个世界有很多美好的事情等待您去发掘。</string>
+    <string name="Evaluation5">因您的您的交感神经系统过于活跃，会感到紧张、不安、恐慌、激动等症状，建议您平时多休息、放松，不要给自己太大心理压力，凡事尽人事，听天命。</string>
+    <string name="Evaluation6">因您的您的交感神经系统过于活跃，会感到紧张、不安、恐慌、激动等症状，鉴于您的抗压状态良好，所以这种情况只是暂时的，建议您通过冥想、深呼吸、听音乐等方式方式自己。</string>
+    <string name="Evaluation7">因您的身体所承受压力大，会感到腰酸背痛、身体疲劳，建议您养成健康的生活方式，保证充足的睡眠，提高抗压能力和身体免疫能力。</string>
+    <string name="Evaluation8">因您的身体所承受压力大，会感到腰酸背痛、身体疲劳，鉴于您的抗压状态良好，所以这种情况只是暂时的，停下手中的工作，小憩片刻，方便的可以泡个热水澡解解乏。</string>
+    <string name="Evaluation9">恭喜您，您的情绪和身体状况处于比较良好的状态，您需要做的就是通过健康的管理来维持现状的状态。</string>
+    <string name="Evaluation10">恭喜您，您的情绪和身体状况处于比较良好的状态，抗压能力极佳，心肺机能像运动员一样良好。</string>
+    <string name="Evaluation11">您的情绪和身体状况处于比较良好的状态，您需要做的就是通过健康的管理来维持现状的状态。</string>
+
 </resources>
