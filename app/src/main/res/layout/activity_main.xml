@@ -16,12 +16,28 @@
 
     </com.github.mikephil.charting.charts.LineChart>
 
-    <Button
-        android:id="@+id/btn_start_checkup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:text="开始检测"/>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_start_checkup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始检测"/>
+
+        <TextView
+            android:id="@+id/tv_bluetooth_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
 
 
     <ScrollView

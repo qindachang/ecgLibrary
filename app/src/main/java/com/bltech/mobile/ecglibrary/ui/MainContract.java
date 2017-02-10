@@ -11,8 +11,7 @@ import com.bltech.mobile.ecglibrary.BaseView;
 
 public interface MainContract {
     interface View extends BaseView<Presenter> {
-        void onBluetoothScanning(boolean scanning);
-        void onBluetoothConnectChange(boolean connected);
+        void onBluetoothStatus(String text);
         void onEcgChartDataChange(short[] data);
         void onHeartRateChange(int heartRate);
         void onCheckupCountDown(String time);

@@ -22,14 +22,15 @@ public class CheckupResultPresenter implements CheckupResultContract.Presenter {
 
         @Override
         public void onSuccess(AnalyzeResult result) {
-            String[] array = mEcgManager.getAnalyzeComment(result);
+            String[] array = mEcgManager.getAnalyzeComment(mContext, result);
             String comment = array[0];
             String suggest = array[1];
+            mView.onCommentSuggestFeedback(result, comment, suggest);
         }
 
         @Override
         public void onFailed(AnalyzeException e, int status) {
-
+            mView.onCommentSuggestError(e);
         }
 
     };
@@ -39,8 +40,6 @@ public class CheckupResultPresenter implements CheckupResultContract.Presenter {
         mView = view;
         mView.setPresenter(this);
         mEcgManager = EcgManager.getInstance();
-
-        mEcgManager.analyzeEcgFile("filePath", mAnalyzeCallback);
     }
 
     @Override
@@ -52,5 +51,10 @@ public class CheckupResultPresenter implements CheckupResultContract.Presenter {
     public void destroy() {
         mContext = null;
         mEcgManager.removeCallback(mAnalyzeCallback);
+    }
+
+    @Override
+    public void startAnalyzeFile(String filePath) {
+        mEcgManager.analyzeEcgFile(filePath, mAnalyzeCallback);
     }
 }

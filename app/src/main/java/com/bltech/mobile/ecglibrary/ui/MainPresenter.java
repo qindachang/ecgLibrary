@@ -77,9 +77,6 @@ public class MainPresenter implements MainContract.Presenter {
 
         mEcgManager.setDecodeDataCallback(mDecodeDataCallback);
 
-        final File file = mFileUtils.initFilePath(FilePathMode.SD, "Android/data", "haha.ecg");
-        mFileUtils.readyWriteData(file.getPath());
-        filePath = file.getPath();
 
         mBluetoothLe.setOnConnectListener(TAG, new OnLeConnectListener() {
             @Override
@@ -89,17 +86,17 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onDeviceConnected() {
-                mView.onBluetoothConnectChange(true);
+                mView.onBluetoothStatus("蓝牙已连接");
             }
 
             @Override
             public void onDeviceDisconnected() {
-                mView.onBluetoothConnectChange(false);
+                mView.onBluetoothStatus("蓝牙已断开！");
             }
 
             @Override
             public void onServicesDiscovered(BluetoothGatt gatt) {
-
+                mView.onBluetoothStatus("发现蓝牙服务");
             }
 
             @Override
@@ -111,8 +108,10 @@ public class MainPresenter implements MainContract.Presenter {
         mBluetoothLe.setOnNotificationListener(TAG, new OnLeNotificationListener() {
             @Override
             public void onSuccess(BluetoothGattCharacteristic characteristic) {
-                mEcgManager.decodeData(characteristic.getValue());//解密、类型转换、滤波数据
-                mFileUtils.writeDataAsFile(characteristic.getValue());//将接收到的数据写入到文件中
+                if (characteristic.getUuid().equals(UUIDAttributes.ecg.NOTIFICATION_ECG_SIGNAL)) {
+                    mEcgManager.decodeData(characteristic.getValue());//解密、类型转换、滤波数据
+                    mFileUtils.writeDataAsFile(characteristic.getValue());//将接收到的数据写入到文件中
+                }
             }
 
             @Override
@@ -120,6 +119,9 @@ public class MainPresenter implements MainContract.Presenter {
 
             }
         });
+
+
+        mView.onBluetoothStatus(mBluetoothLe.getServicesDiscovered() ? "已连接设备" : "未连接设备");
 
     }
 
@@ -153,6 +155,10 @@ public class MainPresenter implements MainContract.Presenter {
             Toast.makeText(mContext, "正在检测中", Toast.LENGTH_SHORT).show();
             return;
         }
+        final File file = mFileUtils.initFilePath(FilePathMode.SD, "Android/data", "haha.ecg");
+        mFileUtils.readyWriteData(file.getPath());
+        filePath = file.getPath();
+
         mBluetoothLe.writeDataToCharacteristic(new byte[]{8}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);//打开总开关
         mBluetoothLe.writeDataToCharacteristic(new byte[]{1, 1}, UUIDAttributes.command.SERVICE_COMMAND, UUIDAttributes.command.WRITE);//打开心率通知
         mBluetoothLe.enableNotification(true, UUIDAttributes.ecg.SERVICE_ECG, UUIDAttributes.ecg.NOTIFICATION_HEART_RATE);//使能心率通知
@@ -169,7 +175,6 @@ public class MainPresenter implements MainContract.Presenter {
             Toast.makeText(mContext, "正在扫描中", Toast.LENGTH_SHORT).show();
             return;
         }
-        mView.onBluetoothScanning(true);
         mBluetoothLe.setScanPeriod(15000)
                 .setScanWithServiceUUID(UUIDAttributes.ecg.SERVICE_ECG)
                 .startScan(mView.getActivity(), new OnLeScanListener() {
@@ -186,7 +191,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                     @Override
                     public void onScanCompleted() {
-                        mView.onBluetoothScanning(false);
+
                     }
 
                     @Override

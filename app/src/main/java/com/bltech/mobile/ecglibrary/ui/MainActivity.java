@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private LineChart mLineChart;
     private Button btnCheckup;
-    private TextView tvEcg, tvHeartRate;
+    private TextView tvEcg, tvHeartRate,tvBluetoothStatus;
 
 
     @Override
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         btnCheckup = (Button) findViewById(R.id.btn_start_checkup);
         tvEcg = (TextView) findViewById(R.id.tv_ecg_data);
         tvHeartRate = (TextView) findViewById(R.id.tv_heart_rate);
+        tvBluetoothStatus = (TextView) findViewById(R.id.tv_bluetooth_status);
         new MainPresenter(this, this);
 
         btnCheckup.setOnClickListener(new View.OnClickListener() {
@@ -69,14 +70,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         }
     }
 
-    @Override
-    public void onBluetoothScanning(boolean scanning) {
-
-    }
 
     @Override
-    public void onBluetoothConnectChange(boolean connected) {
-
+    public void onBluetoothStatus(String text) {
+        tvBluetoothStatus.setText(text);
     }
 
     @Override
