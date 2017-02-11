@@ -4,7 +4,7 @@ demo 运行环境：Android Studio 2.2.3
 
 ###Download
 
-    compile 'com.qindachang:ecg-library:1.0.0'
+    compile 'com.qindachang:ecg-library:1.0.8@aar'
 
 ###开发文档
 
