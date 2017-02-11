@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">utils</string>
 
     <!-- 交感-副交感神经平衡度 -->
     <string name="Sympathetic1">您的副交感神经系统处于过度主导地位</string> <!-- 若小于等于0.4 -->

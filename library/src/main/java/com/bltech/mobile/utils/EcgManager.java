@@ -51,7 +51,7 @@ public class EcgManager {
     }
 
     public void setDecodeDataCallback(DecodeDataCallback decodeDataCallback) {
-        if (!mCallbacks.contains(decodeDataCallback)) {
+        if (!mCallbacks.contains(decodeDataCallback) && decodeDataCallback != null) {
             mCallbacks.add(decodeDataCallback);
         }
     }
@@ -67,36 +67,23 @@ public class EcgManager {
      * @param callback AnalyzeCallback
      */
     public void analyzeEcgFile(String filePath, AnalyzeCallback callback) {
-        if (!mCallbacks.contains(callback)) {
+        if (filePath == null) {
+            nullPointException("ecg file path can not be null.");
+        }
+        if (!mCallbacks.contains(callback) && callback != null) {
             mCallbacks.add(callback);
         }
         AnalyzeResult analyzeResult = new AnalyzeResult();
         analyzeResult.setDegree(1.0f);
         analyzeResult.setHRV_des(new int[]{0, 0, 0, 0, 0, 0});
         analyzeResult.setAnalyze(new int[]{0, 0, 0, 0, 0, 0});
+        int[] HRV_des = new int[6];
+        int[] analyze = new int[6];
         try {
-            int[] HRV_des = new int[6];
-            int[] analyze = new int[6];
             float degree = EcgNative.HRV_des(filePath, HRV_des, analyze);
             analyzeResult.setDegree(degree);
             analyzeResult.setHRV_des(HRV_des);
             analyzeResult.setAnalyze(analyze);
-            if (checkArrayIsAllTheSame(HRV_des)) {
-                for (Callback c : mCallbacks) {
-                    if (c instanceof AnalyzeCallback) {
-                        AnalyzeException exception = new AnalyzeException();
-                        ExceptionBuilder builder = new ExceptionBuilder.Builder().setType(ExceptionMode.ABNORMAL).build();
-                        exception.setType(builder);
-                        ((AnalyzeCallback) c).onFailed(exception, ExceptionMode.ABNORMAL);
-                    }
-                }
-            } else {
-                for (Callback c : mCallbacks) {
-                    if (c instanceof AnalyzeCallback) {
-                        ((AnalyzeCallback) c).onSuccess(analyzeResult);
-                    }
-                }
-            }
         } catch (Exception e) {
             for (Callback c : mCallbacks) {
                 if (c instanceof AnalyzeCallback) {
@@ -106,8 +93,24 @@ public class EcgManager {
                     ((AnalyzeCallback) c).onFailed(exception, ExceptionMode.NDK);
                 }
             }
+            return;
         }
-
+        if (checkArrayIsAllTheSame(HRV_des)) {
+            for (Callback c : mCallbacks) {
+                if (c instanceof AnalyzeCallback) {
+                    AnalyzeException exception = new AnalyzeException();
+                    ExceptionBuilder builder = new ExceptionBuilder.Builder().setType(ExceptionMode.ABNORMAL).build();
+                    exception.setType(builder);
+                    ((AnalyzeCallback) c).onFailed(exception, ExceptionMode.ABNORMAL);
+                }
+            }
+        } else {
+            for (Callback c : mCallbacks) {
+                if (c instanceof AnalyzeCallback) {
+                    ((AnalyzeCallback) c).onSuccess(analyzeResult);
+                }
+            }
+        }
     }
 
     private boolean checkArrayIsAllTheSame(int[] arr) {
@@ -126,10 +129,20 @@ public class EcgManager {
      * @return String[0]comment，String[1]suggest
      */
     public final String[] getAnalyzeComment(Context context, AnalyzeResult analyzeResult) {
+        if (context == null) {
+            nullPointException("context can not be null.");
+        }
+        if (analyzeResult == null) {
+            nullPointException("AnalyzeResult can not be null.");
+        }
         String[] result = new String[2];
         Suggestion suggestion = new Suggestion(context, analyzeResult);
         result[0] = suggestion.getComment();
         result[1] = suggestion.getSuggest();
         return result;
+    }
+
+    private void nullPointException(String what) {
+        throw new NullPointerException(what);
     }
 }

@@ -15,7 +15,13 @@ import java.io.IOException;
 
 public class EcgFileUtils {
 
-    public File initFilePath(@FilePathMode int mode, String path, String fileName) {
+    /**
+     * @param mode     FilePathMode.SD & FilePathMode.INTERNAL
+     * @param path     set your ecg file path
+     * @param fileName set your ecg file name
+     * @return that file what you set
+     */
+    public File initFilePath(int mode, String path, String fileName) {
         File file;
         File file1;
         if (mode == FilePathMode.SD && isSDExist()) {
@@ -37,7 +43,7 @@ public class EcgFileUtils {
         return file1;
     }
 
-    public boolean isSDExist() {
+    private boolean isSDExist() {
         return Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 

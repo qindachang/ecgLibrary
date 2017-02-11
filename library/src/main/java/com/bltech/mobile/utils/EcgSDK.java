@@ -6,7 +6,12 @@ package com.bltech.mobile.utils;
 
 public class EcgSDK {
 
+    private EcgSDK(){}
+
     public static void initSDK(EcgConfig config) {
+        if (config == null) {
+            throw new NullPointerException("EcgConfig object can not be null.");
+        }
         EcgNative.initialize();
         int filterFrequency = config.getFilterFrequency();
         EcgNative.EcgIni(filterFrequency);

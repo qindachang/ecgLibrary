@@ -1,7 +1,5 @@
 package com.bltech.mobile.utils;
 
-import com.bltech.mobile.utils.annotation.ExceptionMode;
-
 /**
  * Created by qindachang on 2017/2/9.
  */
@@ -20,7 +18,7 @@ class ExceptionBuilder {
     static class Builder {
         private int type;
 
-        Builder setType(@ExceptionMode int type) {
+        Builder setType(int type) {
             this.type = type;
             return this;
         }

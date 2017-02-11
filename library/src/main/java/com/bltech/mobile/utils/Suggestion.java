@@ -1,7 +1,6 @@
 package com.bltech.mobile.utils;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 /**
  *
@@ -14,7 +13,7 @@ class Suggestion {
 
     private Context mContext;
 
-    Suggestion(Context context, @NonNull AnalyzeResult analyzeResult) {
+    Suggestion(Context context, AnalyzeResult analyzeResult) {
         mContext = context;
         hrv = analyzeResult.getDegree();
         HRV_des = analyzeResult.getHRV_des();

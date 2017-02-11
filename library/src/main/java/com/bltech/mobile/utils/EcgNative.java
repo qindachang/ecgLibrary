@@ -3,7 +3,6 @@ package com.bltech.mobile.utils;
 
 class EcgNative {
 
-
     static void initialize() {
         System.loadLibrary("ecgalgo");
     }
