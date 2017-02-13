@@ -39,7 +39,7 @@ public class CheckupResultPresenter implements CheckupResultContract.Presenter {
         mContext = context;
         mView = view;
         mView.setPresenter(this);
-        mEcgManager = EcgManager.getInstance();
+        mEcgManager = new EcgManager();
     }
 
     @Override

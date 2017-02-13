@@ -70,7 +70,7 @@ public class MainPresenter implements MainContract.Presenter {
         mView.setPresenter(this);
 
         mBluetoothLe = BluetoothLe.getDefault();
-        mEcgManager = EcgManager.getInstance();
+        mEcgManager = new EcgManager();
         mFileUtils = new EcgFileUtils();
         mSubscriptions = new CompositeSubscription();
         mCheckupStateHelper = new CheckupStateHelper();

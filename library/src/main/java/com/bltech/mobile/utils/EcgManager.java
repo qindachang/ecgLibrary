@@ -12,14 +12,6 @@ import java.util.Set;
  */
 
 public class EcgManager {
-    private static EcgManager ourInstance = new EcgManager();
-
-    public static EcgManager getInstance() {
-        return ourInstance;
-    }
-
-    private EcgManager() {
-    }
 
     private byte[] txValue = new byte[20];
     private short[] converter = new short[20];
