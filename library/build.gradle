@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 24
-        versionCode 9
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.0.9"
     }
     buildTypes {
         release {
@@ -39,7 +39,7 @@ publish {
     userOrg = 'qindachang'
     groupId = 'com.qindachang'
     artifactId = 'ecg-library'
-    publishVersion = '1.0.8'
+    publishVersion = '1.0.9'
     desc = 'Android ECG Library'
     website = 'https://github.com/qindachang/ecgLibrary'
 }
