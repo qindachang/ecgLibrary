@@ -15,4 +15,6 @@ demo 运行环境：Android Studio 2.2.3
 
 [智裳科技-心率心电Android开发文档](https://shimo.im/doc/S7UWjNzEWR4qJ38a "智裳科技-心率心电Android开发文档")
 
+[智裳科技-心率心电硬件接口文档](https://shimo.im/doc/Qm3NJDvtus4Gj27k "智裳科技-心率心电硬件接口文档")
+
 
